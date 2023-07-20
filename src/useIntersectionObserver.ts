@@ -1,5 +1,3 @@
-import { useSyncExternalStore, useMemo } from "react";
-
 interface UseInterSectionObserverOptions extends IntersectionObserverInit {
   initialValue?: boolean;
 }
@@ -59,31 +57,4 @@ class IntersectionObserverGenerator {
   public getServerValue = () => {
     return this.serverValue;
   };
-}
-
-export function useInterSectionObserver({
-  root,
-  rootMargin,
-  threshold,
-  initialValue,
-}: UseInterSectionObserverOptions = {}) {
-  const subscribeAndSnapshotFunction: {
-    subscribe: (cb: () => void) => () => void;
-    inViewSnapshot: () => boolean;
-    entrySnapshot: () => IntersectionObserverEntry | undefined;
-  } = useMemo(() => {
-    const data = new IntersectionObserverGenerator({
-      root,
-      rootMargin,
-      threshold,
-      initialValue,
-    });
-    //@ts-ignore
-    intersectionObserverRef.current = data.intersectionObserver;
-    return {
-      subscribe: data.subscribe,
-      inViewSnapshot: data.inViewSnapshot,
-      entrySnapshot: data.entrySnapshot,
-    };
-  }, [root, rootMargin, threshold, initialValue]);
 }
