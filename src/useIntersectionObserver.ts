@@ -21,6 +21,9 @@ class IntersectionObserverGenerator {
     }
   }
 
+  /**
+   * @description emit changes to all listeners whenever the value of isInView or entrys changes
+   */
   private emitChanges = () => {
     this.listeners.forEach((listener) => {
       listener();
