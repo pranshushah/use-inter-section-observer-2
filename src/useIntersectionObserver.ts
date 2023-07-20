@@ -4,7 +4,6 @@ interface UseInterSectionObserverOptions extends IntersectionObserverInit {
 class IntersectionObserverGenerator {
   public intersectionObserver: IntersectionObserver;
   private listeners = new Set<() => void>();
-  // don't forget to emit changes whenvever we mutate isInView or entry.
   private isInView = false;
   private serverValue = false;
   private entry?: IntersectionObserverEntry;
@@ -42,5 +41,17 @@ class IntersectionObserverGenerator {
     return () => {
       this.listeners.delete(cb);
     };
+  };
+
+  public inViewSnapshot = () => {
+    return this.isInView;
+  };
+
+  public entrySnapshot = () => {
+    return this.entry;
+  };
+
+  public getServerValue = () => {
+    return this.serverValue;
   };
 }
