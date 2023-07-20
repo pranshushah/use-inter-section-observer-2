@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useSyncExternalStore } from "react";
-interface UseInterSectionObserverOptions extends IntersectionObserverInit {
+export interface UseInterSectionObserverOptions extends IntersectionObserverInit {
   initialValue?: boolean;
 }
 class IntersectionObserverGenerator {
