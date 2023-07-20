@@ -1,4 +1,4 @@
-import { useMemo, useRef, useSyncExternalStore } from "react";
+import { useCallback, useMemo, useRef, useSyncExternalStore } from "react";
 interface UseInterSectionObserverOptions extends IntersectionObserverInit {
   initialValue?: boolean;
 }
@@ -91,4 +91,29 @@ export function useInterSectionObserver({
       inViewSnapshotServer: data.getServerValue,
     };
   }, [root, rootMargin, threshold, initialValue]);
+
+  const ref = useCallback((node: Element | null) => {
+    if (
+      intersectionObserverRef.current &&
+      node &&
+      intersectionObserverRef.current.takeRecords().length > 0
+    ) {
+      intersectionObserverRef.current.disconnect();
+    }
+    if (intersectionObserverRef.current && node) {
+      intersectionObserverRef.current.observe(node);
+    }
+  }, []);
+
+  const isInView = useSyncExternalStore(
+    subscribeAndSnapshotFunction.subscribe,
+    subscribeAndSnapshotFunction.inViewSnapshot,
+    subscribeAndSnapshotFunction.inViewSnapshotServer,
+  );
+
+  const entry = useSyncExternalStore(
+    subscribeAndSnapshotFunction.subscribe,
+    subscribeAndSnapshotFunction.entrySnapshot,
+  );
+  return { isInView, entry, ref } as const;
 }
