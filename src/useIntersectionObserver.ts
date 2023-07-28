@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useRef, useSyncExternalStore } from "react";
 export interface UseInterSectionObserverOptions extends IntersectionObserverInit {
   initialValue?: boolean;
+  triggerOnce?: boolean;
 }
 class IntersectionObserverGenerator {
   public intersectionObserver: IntersectionObserver;
@@ -8,6 +9,8 @@ class IntersectionObserverGenerator {
   private isInView = false;
   private serverValue = false;
   private entry?: IntersectionObserverEntry;
+  private triggerOnce = false;
+  private shouldEmitChanges = true;
 
   constructor(options: UseInterSectionObserverOptions) {
     const initialValue = options.initialValue;
@@ -19,6 +22,9 @@ class IntersectionObserverGenerator {
     if (typeof initialValue === "boolean") {
       this.serverValue = initialValue;
       this.isInView = initialValue;
+    }
+    if (options.triggerOnce) {
+      this.triggerOnce = options.triggerOnce;
     }
   }
 
