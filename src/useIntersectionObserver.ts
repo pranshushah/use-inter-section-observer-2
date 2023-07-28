@@ -39,10 +39,13 @@ class IntersectionObserverGenerator {
 
   private intersectionObserverCallback = (entries: IntersectionObserverEntry[]) => {
     const [entry] = entries;
-    if (entry) {
+    if (entry && this.shouldEmitChanges) {
       this.isInView = entry.isIntersecting;
       this.entry = entry;
       this.emitChanges();
+      if (this.triggerOnce && entry.isIntersecting) {
+        this.shouldEmitChanges = false;
+      }
     }
   };
 
@@ -71,6 +74,7 @@ export function useInterSectionObserver({
   rootMargin,
   threshold,
   initialValue,
+  triggerOnce,
 }: UseInterSectionObserverOptions = {}) {
   if (typeof useSyncExternalStore !== "function" || !useSyncExternalStore) {
     throw new Error("use-intersection-observer-2 requires react@18.0.0 or higher");
@@ -87,6 +91,7 @@ export function useInterSectionObserver({
       rootMargin,
       threshold,
       initialValue,
+      triggerOnce,
     });
     //@ts-ignore
     intersectionObserverRef.current = data.intersectionObserver;
@@ -96,7 +101,7 @@ export function useInterSectionObserver({
       entrySnapshot: data.entrySnapshot,
       inViewSnapshotServer: data.getServerValue,
     };
-  }, [root, rootMargin, threshold, initialValue]);
+  }, [root, rootMargin, threshold, initialValue, triggerOnce]);
 
   const ref = useCallback((node: Element | null) => {
     if (
