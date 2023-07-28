@@ -7,5 +7,8 @@
   "dependencies": {
     "@types/react": "^18.2.15",
     "react": "~18.2.0"
+  },
+  "devDependencies": {
+    "tsup": "^7.1.0"
   }
 }
