@@ -1,11 +1,31 @@
 {
-  "name": "use-intersection-observer",
+  "name": "use-intersection-observer-2",
   "version": "0.0.1",
   "main": "index.js",
   "author": "pranshushah",
   "license": "MIT",
-  "dependencies": {
-    "@types/react": "^18.2.15",
-    "react": "~18.2.0"
+  "peerDependencies": {
+    "react": "18.x"
+  },
+  "files": ["dist"],
+  "engines": {
+    "node": ">=16"
+  },
+  "devDependencies": {
+    "tsup": "^7.1.0",
+    "typescript": "4.9.5",
+    "@types/react": "^18.2.15"
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "sourcemap": true,
+    "dts": true,
+    "format":["esm","cjs"],
+    "minify":true
   }
 }
