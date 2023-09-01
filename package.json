@@ -1,5 +1,5 @@
 {
-  "name": "use-intersection-observer",
+  "name": "use-intersection-observer-2",
   "version": "0.0.1",
   "main": "index.js",
   "author": "pranshushah",
@@ -8,6 +8,7 @@
     "@types/react": "^18.2.15",
     "react": "~18.2.0"
   },
+  "files": ["dist"],
   "devDependencies": {
     "tsup": "^7.1.0",
     "typescript": "4.9.5"
